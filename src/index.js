@@ -20,7 +20,7 @@ hbs.registerPartials(partialsPath);
 
 app.use(express.static(publicDirectoryPath));
 
-app.get("/", async (req, res) => {
+app.get("", (req, res) => {
   res.render("index");
 });
 
@@ -29,11 +29,11 @@ let count = 0;
 io.on("connection", (socket) => {
   console.log("New websocket connection");
 
-  socket.emit("countUpdated", count);
+  const welcomeMessage = "welcome to the Chat app.";
+  socket.emit("message", welcomeMessage);
 
-  socket.on("increment", () => {
-    count++;
-    io.emit("countUpdated", count);
+  socket.on("sendMessage", (message) => {
+    io.emit("message", message);
   });
 });
 
