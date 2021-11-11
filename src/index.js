@@ -29,11 +29,15 @@ let count = 0;
 io.on("connection", (socket) => {
   console.log("New websocket connection");
 
-  const welcomeMessage = "welcome to the Chat app.";
-  socket.emit("message", welcomeMessage);
+  socket.emit("message", "welcome to the Chat app.");
+  socket.broadcast.emit("message", "A new user has connected!");
 
   socket.on("sendMessage", (message) => {
     io.emit("message", message);
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("message", "A user has left.");
   });
 });
 
