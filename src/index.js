@@ -64,14 +64,21 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (message, callback) => {
     const filter = new Filter();
-
     if (filter.isProfane(message)) return callback("Profanity is not allowed");
-    io.emit("message", generateMessage(message));
+
+    const user = getUser(socket.id);
+    if (user) {
+      io.to(user.room).emit("message", generateMessage(message, user.username));
+    }
     callback();
   });
 
   socket.on("sendLocation", (coords, callback) => {
-    io.emit("locationMessage", generateLocationMessage(coords));
+    const user = getUser(socket.id);
+    io.to(user.room).emit(
+      "locationMessage",
+      generateLocationMessage(coords, user.username)
+    );
     callback();
   });
 
