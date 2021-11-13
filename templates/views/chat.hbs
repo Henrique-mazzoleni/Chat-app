@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="chat">
-      <div class="chat__sidebar">
+      <div id="sidebar" class="chat__sidebar">
 
       </div>
       <div class="chat__main">
@@ -46,6 +46,15 @@
         target="_blank">My current location</a></p>
       {{/raw}}
       </div>
+    </script>
+
+    <script id="sidebar-template" type="text/html">
+      {{#raw}}
+        <h2 class="room-title">\{{room}}</h2> <h3 class="list-title">Users</h3>
+        <ul class="users">
+        \{{#users}} <li>\{{username}}</li>
+        \{{/users}} </ul>
+      {{/raw}}
     </script>
 
     <script
